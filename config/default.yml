@@ -1,0 +1,7 @@
+development: &common_settings
+  secret_key_base: 
+  twitter_api_key: 
+  twitter_api_secret: 
+
+production:
+<<: *common_settings
