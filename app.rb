@@ -13,6 +13,25 @@ configure do
 end
 
 
+before do
+  pass if request.path_info =~ /^\/auth\//
+  redirect to( 'auth/twitter' ) unless current_user
+end
+
+
+
+# index, prolly wont get used
 get '/' do
   erb :index
+end
+
+# auth routes
+get '/auth/twitter/callback' do
+  session[:uid] = env['omniauth.auth']['uid']
+  redirect to( '/builder' )
+end
+
+get '/auth/failure' do
+    status 503
+    body 'ERROR 503, there was a problem with authentication'
 end
