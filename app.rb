@@ -1,8 +1,11 @@
+require 'rubygems'
 require 'sinatra'
+require 'sinatra/contrib'
 require 'omniauth-twitter'
-require 'helpers/sessions'
+require 'pp'
 
-register Sinatra::ConfigFile
+set :environment, :development
+
 config_file 'config/secrets.yml'
 
 configure do
@@ -13,12 +16,16 @@ configure do
 end
 
 
+helpers do
+  def current_user
+    !session[:uid].nil?
+  end
+end
+
 before do
   pass if request.path_info =~ /^\/auth\//
   redirect to( 'auth/twitter' ) unless current_user
 end
-
-
 
 # index, prolly wont get used
 get '/' do

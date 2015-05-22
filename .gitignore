@@ -1,2 +1,3 @@
 config/sercrets.yml
 config/secrets*
+Gemfile.lock
