@@ -23,13 +23,13 @@ helpers do
 end
 
 before do
-  pass if request.path_info =~ /^\/auth\//
-  redirect to( 'auth/twitter' ) unless current_user
+  # pass if request.path_info =~ /^\/auth\//
+  # redirect to( 'auth/twitter' ) unless current_user
 end
 
 # index, prolly wont get used
 get '/' do
-  erb :index
+  haml :index, :format => :html5
 end
 
 # auth routes
