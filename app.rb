@@ -3,6 +3,8 @@ require 'sinatra'
 require 'sinatra/contrib'
 require 'omniauth-twitter'
 require 'pp'
+require 'dotenv'
+Dotenv.load
 
 set :environment, :development
 
