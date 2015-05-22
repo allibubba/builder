@@ -42,3 +42,9 @@ get '/auth/failure' do
     status 503
     body 'ERROR 503, there was a problem with authentication'
 end
+
+# if authenticated, callback will redirect to the form
+
+get '/builder' do
+  haml :builder, :format => :html5
+end
