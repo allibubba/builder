@@ -1,13 +1,15 @@
 require 'rubygems'
+require 'rack/cache'
 require 'sinatra'
 require 'sinatra/contrib'
 require 'omniauth-twitter'
 require 'pp'
+require "haml"
 require 'dotenv'
 Dotenv.load
 
 set :environment, :development
-
+set :public_folder, 'public'
 config_file 'config/secrets.yml'
 
 use Rack::Session::Cookie, :key => 'builder_app',
@@ -27,9 +29,16 @@ helpers do
   end
 end
 
-# index, prolly wont get used
-get '/' do
+#redirect to static page if accessed without
+get "/" do
+  cache_control :public, :max_age => 36000
   haml :index, format: :html5
+end
+
+#form must be subitted via ajax to processing system
+post "/" do
+  status 503
+  body 'ERROR 503, you cannot submit here' 
 end
 
 # auth routes
@@ -43,7 +52,20 @@ get '/auth/failure' do
   body 'ERROR 503, there was a problem with authentication'
 end
 
-# if authenticated, callback will redirect to the form
+# if authenticated, show form, else go to login page
 get '/builder' do
-  haml :builder, format: :html5
+  pp session[:uid].nil?
+  if session[:uid]
+    send_file File.join(settings.public_folder, 'builder.html')
+  else
+    redirect '/'
+  end
+end
+
+
+
+# clear session data
+get '/logout' do
+  session[:uid] = nil
+  redirect to('/')
 end
