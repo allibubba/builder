@@ -6,3 +6,4 @@ require 'pp'
 require "haml"
 require 'dotenv'
 require './app.rb'
+run Sinatra::Application
