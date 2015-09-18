@@ -2,28 +2,36 @@ require 'rubygems'
 require 'rack/cache'
 require 'sinatra'
 require 'sinatra/contrib'
-require "sinatra/base"
-require "sinatra/config_file"
+require 'sinatra/base'
+require 'sinatra/config_file'
 require 'omniauth-twitter'
 require 'pp'
-require "haml"
+require 'haml'
 require 'dotenv'
 Dotenv.load
+
+# The program allows authentication via
+# OmniAuth's Twitter provider.
+#
+# Author::    Jackson Oates
+# License::   Distributes under the same terms as Ruby
+
 class MyApp < Sinatra::Base
   register Sinatra::ConfigFile
-  set :environments, %w{development test production staging}
+  set :environments, %w(development test production staging)
   set :environment, :development
   set :public_folder, 'public'
   configure :staging, :development do
-        enable :logging
+    enable :logging
   end
 
   config_file 'config/secrets.yml'
 
-  use Rack::Session::Cookie, :key => 'builder_app',
-    :path => '/',
-    :expire_after => 14400, # In seconds
-    :secret => 'secret_stuff'
+  use Rack::Session::Cookie,
+      key: 'builder_app',
+      path: '/',
+      expire_after: 14_400,
+      secret: 'secret_stuff'
 
   configure do
     use OmniAuth::Builder do
@@ -37,14 +45,14 @@ class MyApp < Sinatra::Base
     end
   end
 
-  #redirect to static page if accessed without
-  get "/" do
+  # redirect to static page if accessed without
+  get '/' do
     # cache_control :public, :max_age => 36000
     haml :index, format: :html5
   end
 
-  #form must be subitted via ajax to processing system
-  post "/" do
+  # form must be subitted via ajax to processing system
+  post '/' do
     status 503
     body 'ERROR 503, you cannot submit here'
   end

@@ -3,7 +3,7 @@ require 'sinatra'
 require 'sinatra/contrib'
 require 'omniauth-twitter'
 require 'pp'
-require "haml"
+require 'haml'
 require 'dotenv'
 require './app.rb'
 run Sinatra::Application
