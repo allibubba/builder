@@ -63,7 +63,8 @@ class MyApp < Sinatra::Base
   # if authenticated, show form, else go to login page
   get '/builder' do
     if session[:uid]
-      send_file File.join(settings.public_folder, 'builder.html')
+      # send_file File.join(settings.public_folder, 'builder.html')
+      haml :builder, format: :html5
     else
       redirect '/'
     end
