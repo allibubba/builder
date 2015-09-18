@@ -3,17 +3,3 @@ engines:
 # to turn off an engine, set enabled to `false` or remove it
   rubocop:
     enabled: true
-  golint:
-    enabled: true
-  gofmt:
-    enabled: true
-  eslint:
-    enabled: true
-  csslint:
-    enabled: true
-    
-languages:
-  Ruby: true
-  JavaScript: true
-# exclude_paths:
-# - "foo/bar.rb"
