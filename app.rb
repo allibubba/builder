@@ -15,7 +15,6 @@ Dotenv.load
 #
 # Author::    Jackson Oates
 # License::   Distributes under the same terms as Ruby
-
 class MyApp < Sinatra::Base
   register Sinatra::ConfigFile
   set :environments, %w(development test production staging)
